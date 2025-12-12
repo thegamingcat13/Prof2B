@@ -22,11 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "stdio.h"
-#include <stdbool.h>
-#include <stdint.h> // For uint8_t
-#include <stdlib.h> // For rand() and srand()
-#include <time.h>   // For time() (used to seed the random number generator)
+#include "game.h" // Main header file for game programm
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -69,134 +65,13 @@ static void MX_USART3_UART_Init(void);
 void MX_USB_HOST_Process(void);
 
 /* USER CODE BEGIN PFP */
-#define MAX_ENEMYS 6
-#define OBSTACLE_SPAWN_Y 0
+
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-typedef struct {
-    int lane;
-    int yPosition;
-    bool isActive; // To know if this slot in the array is currently in use
-} ObstacleCar;
 
-typedef struct {
-	int lane;
-	bool isActive;
-} PlayerCar;
-
-typedef enum {
-	GAME_RUNNING = 0x08,
-	START_SCREEN = 0x04,
-	GAME_OVER_SCREEN = 0x02,
-} GameState_t;
-
-PlayerCar Player;
-ObstacleCar Enemy[MAX_ENEMYS];
-GameState_t currentGameState = START_SCREEN;
-
-uint8_t NewEnemyMask = 0x00;
-
-uint8_t tx_byte1;
-uint8_t tx_byte2;
-
-uint8_t current_NewEnemyMask;
-
-
-void initStructures()
-{
-	for (int i = 0; i < MAX_ENEMYS; i++)
-	{
-		Enemy[i].lane = -1;
-		Enemy[i].yPosition = -1;
-		Enemy[i].isActive = false;
-	}
-
-	Player.lane = -1;
-	Player.isActive = false;
-}
-
-void initializeRandomSeed()
-{
-	srand((unsigned int) HAL_GetTick());
-}
-
-uint8_t EnemyCarGenerator()
-{
-	uint8_t mask;
-	do
-	{
-		mask = rand() % 16;
-	} while (mask == 15);
-	return mask;
-}
-
-void CreateBytes (uint8_t* byte1, uint8_t* byte2)
-{
-	*byte1 = 0;
-
-	*byte2 = 0;
-
-	*byte1 |= ((currentGameState & 0x0F) << 4);
-	*byte1 |= (NewEnemyMask & 0x0F);
-
-	switch (Player.lane)
-	{
-	case 0: *byte2 |= ((0x08 & 0x0F) << 4); break;
-	case 1: *byte2 |= ((0x04 & 0x0F) << 4); break;
-	case 2: *byte2 |= ((0x02 & 0x0F) << 4); break;
-	case 3: *byte2 |= ((0x01 & 0x0F) << 4); break;
-	default: break;
-	}
-}
-
-void TransmitByte(uint8_t byte)
-{
-	HAL_UART_Transmit(&huart3, &byte, 1, HAL_MAX_DELAY);
-}
-
-void addNewObstacleCar(int lane) {
-    // Find an inactive slot in the array
-    for (int i = 0; i < MAX_ENEMYS; i++) {
-        if (!Enemy[i].isActive) {
-        	Enemy[i].lane = lane;
-        	Enemy[i].yPosition = OBSTACLE_SPAWN_Y; // Start at the top
-        	Enemy[i].isActive = true;
-
-            // For debugging:
-            printf("Spawned new car in lane %d at y=%d\n", lane, Enemy[i].yPosition);
-            return; // Car added, so exit the function
-        }
-    }
-}
-
-void processNewEnemyMask(uint8_t mask)
-{
-	if (mask == 0x00)
-		return;
-
-	for (int lane = 0; lane <4; lane++)
-	{
-		if ((mask >> lane) & 0x01)
-			addNewObstacleCar(lane);
-	}
-}
-
-void gameTick ()
-{
-	current_NewEnemyMask = EnemyCarGenerator();
-	processNewEnemyMask(current_NewEnemyMask);
-	NewEnemyMask = current_NewEnemyMask;
-
-	CreateBytes (&tx_byte1, &tx_byte2);
-
-	TransmitByte(tx_byte1);
-	TransmitByte(tx_byte2);
-
-	NewEnemyMask = 0x00;
-}
 /* USER CODE END 0 */
 
 /**
@@ -236,9 +111,8 @@ int main(void)
   MX_USART2_Init();
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
-	currentGameState = GAME_RUNNING;
-	initStructures();
-	initializeRandomSeed();
+	init(); // initialize structures and randomizer
+	gameState(2); // set the gamestate to running
 
   /* USER CODE END 2 */
 
@@ -246,7 +120,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  switch (Player.lane)
+	  switch (Player.lane) //dummy player movement
 	  {
 	  case 0: Player.lane = 1; break;
 	  case 1: Player.lane = 2; break;
@@ -254,9 +128,9 @@ int main(void)
 	  default: Player.lane = 0; break;
 	  }
 
-	  gameTick();
+	  gameTick(); //Do a game tick
 
-	  HAL_Delay(200);
+	  HAL_Delay(200); //One gametick every 200ms allowed
     /* USER CODE END WHILE */
     MX_USB_HOST_Process();
 
