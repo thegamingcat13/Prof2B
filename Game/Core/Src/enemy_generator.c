@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 // Function: EnemyCarGenerator
+// Developer: Sander van Beek
 // Input: None
 // Output: uint8_t with new car location mask
 // This function generates a mask that contains the location of the new enemy cars in a byte.
@@ -18,6 +19,7 @@ uint8_t EnemyCarGenerator()
 }
 
 // Function: addNewObstacleCar
+// Developer: Sander van Beek
 // Input: int lane
 // Output: None
 // This function add the information for the new enemy cars to the enemy structure array.
@@ -39,6 +41,7 @@ void addNewEnemy(int lane)
 }
 
 // Function: processNewEnemyMask
+// Developer: Sander van Beek
 // Input: uint8_t mask
 // Output: None
 // This function translates the NewEnemyMask into a interger value that we can use to fill the structure

@@ -12,6 +12,7 @@ uint8_t tx_byte2;
 uint8_t current_NewEnemyMask;
 
 // Function gameTick
+// Developer: Sander van Beek
 // Input: None
 // Output: None
 // This function runs one gameTick, and makes sure that everything that needs to run for a tick runs.
@@ -33,6 +34,7 @@ void gameTick ()
 }
 
 // Function gameState
+// Developer: Sander van Beek
 // Input: int state
 // Output : None
 // This function can be used to change the gameState between STOP, RUNNING and SCORE

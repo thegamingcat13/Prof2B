@@ -4,6 +4,7 @@
 #include "stdio.h"
 
 // Function initStructures
+// Developer: Sander van Beek
 // Input: None
 // Output: None
 // This function initializes all structure field to their start value
@@ -23,6 +24,7 @@ void initStructures()
 }
 
 // Function: initializeRandomSeed
+// Developer: Sander van Beek
 // Input: None
 // Output: None
 // This function start the seed for the randomizer
@@ -32,6 +34,7 @@ void initializeRandomSeed()
 }
 
 // Function: init
+// Developer: Sander van Beek
 // Input: None
 // Output; None
 // This function will be run once and runs all the other initalization functions

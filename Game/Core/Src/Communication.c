@@ -1,6 +1,7 @@
 #include "game.h"
 
 // Function: CreateBytes
+// Developer: Sander van Beek
 // Input uint8_t (pointer) Byte1 & Byte2
 // Output: None
 // This function reads the necessary data and compiles it into the data protocol separated in two bytes
@@ -26,6 +27,7 @@ void CreateBytes (uint8_t* byte1, uint8_t* byte2)
 }
 
 // Function: TransmitByte
+// Developer: Sander van Beek
 // Input uint8_t byte
 // Output: None
 // This function sends the bytes from the CreateBytes() function to the FPGA over UART
