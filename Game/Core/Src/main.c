@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "game.h" // Main header file for game programm
+#include "game.h" // Main header file for game program
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
