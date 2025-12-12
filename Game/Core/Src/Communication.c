@@ -28,7 +28,7 @@ void CreateBytes (uint8_t* byte1, uint8_t* byte2)
 // Function: TransmitByte
 // Input uint8_t byte
 // Output: None
-// This function sends the bytes from the CreateBytes() function to the fpga over UART
+// This function sends the bytes from the CreateBytes() function to the FPGA over UART
 void TransmitByte(uint8_t byte)
 {
 	HAL_UART_Transmit(&huart3, &byte, 1, HAL_MAX_DELAY);
