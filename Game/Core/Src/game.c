@@ -27,8 +27,7 @@ void gameTick ()
 	CreateBytes (&tx_byte1, &tx_byte2);
 
 	// Sent bytes to FPGA
-	TransmitByte(tx_byte1);
-	TransmitByte(tx_byte2);
+	TransmitByte(tx_byte1, tx_byte2);
 
 	NewEnemyMask = 0x00;
 }
