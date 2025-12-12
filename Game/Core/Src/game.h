@@ -10,7 +10,7 @@ extern UART_HandleTypeDef huart3;;
 typedef struct {
     int lane;
     int yPosition;
-    bool isActive; // To know if this slot in the array is currently in use
+    bool isActive;
 } ObstacleCar;
 
 typedef struct {

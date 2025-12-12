@@ -11,20 +11,31 @@ uint8_t tx_byte2;
 
 uint8_t current_NewEnemyMask;
 
+// Function gameTick
+// Input: None
+// Output: None
+// This function runs one gameTick, and makes sure that everything that needs to run for a tick runs.
 void gameTick ()
 {
+	// Generate new enemies
 	current_NewEnemyMask = EnemyCarGenerator();
 	processNewEnemyMask(current_NewEnemyMask);
 	NewEnemyMask = current_NewEnemyMask;
 
+	// Create the 2 bytes necesary for fpga communication
 	CreateBytes (&tx_byte1, &tx_byte2);
 
+	// Sent bytes to fpga
 	TransmitByte(tx_byte1);
 	TransmitByte(tx_byte2);
 
 	NewEnemyMask = 0x00;
 }
 
+// Function gameState
+// Input: int state
+// Output : None
+// This function can be used to change the gamestate between STOP, RUNNING and SCORE
 void gameState (int state)
 {
 	switch (state)
