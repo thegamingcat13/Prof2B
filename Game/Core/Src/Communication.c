@@ -3,14 +3,14 @@
 // Function: CreateBytes
 // Input uint8_t (pointer) Byte1 & Byte2
 // Output: None
-// This function reads the necessary data and compiles it into the data protocol seperated in two bytes
+// This function reads the necessary data and compiles it into the data protocol separated in two bytes
 void CreateBytes (uint8_t* byte1, uint8_t* byte2)
 {
 	//initialize byte1 and byte2 to 0000
 	*byte1 = 0;
 	*byte2 = 0;
 
-	// Place the gamestate and new enemy locations into the first byte
+	// Place the gameState and new enemy locations into the first byte
 	*byte1 |= ((currentGameState & 0x0F) << 4);
 	*byte1 |= (NewEnemyMask & 0x0F);
 

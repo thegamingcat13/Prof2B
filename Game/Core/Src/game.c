@@ -22,10 +22,10 @@ void gameTick ()
 	processNewEnemyMask(current_NewEnemyMask);
 	NewEnemyMask = current_NewEnemyMask;
 
-	// Create the 2 bytes necesary for fpga communication
+	// Create the 2 bytes necessary for FPGA communication
 	CreateBytes (&tx_byte1, &tx_byte2);
 
-	// Sent bytes to fpga
+	// Sent bytes to FPGA
 	TransmitByte(tx_byte1);
 	TransmitByte(tx_byte2);
 
@@ -35,7 +35,7 @@ void gameTick ()
 // Function gameState
 // Input: int state
 // Output : None
-// This function can be used to change the gamestate between STOP, RUNNING and SCORE
+// This function can be used to change the gameState between STOP, RUNNING and SCORE
 void gameState (int state)
 {
 	switch (state)
