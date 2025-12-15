@@ -11,6 +11,8 @@ uint8_t tx_byte2;
 
 uint8_t current_NewEnemyMask = 0x00;
 
+uint16_t score = 0;
+
 bool coll_detect = false;
 
 // Function gameTick
@@ -27,13 +29,17 @@ void gameTick ()
 	{
 	// Not collided
 	case false:
+		// Incease score and make sure it doesn't exceed the max
+		score++;
+		score &= 0x0FFF;
+
 		// Generate new enemies
 		current_NewEnemyMask = EnemyCarGenerator();
 		processNewEnemyMask(current_NewEnemyMask);
 		NewEnemyMask = current_NewEnemyMask;
 
 		// Create the 2 bytes necessary for FPGA communication
-		CreateBytes (&tx_byte1, &tx_byte2);
+		CreateBytes (&tx_byte1, &tx_byte2, coll_detect);
 
 		// Sent bytes to FPGA
 		TransmitByte(tx_byte1, tx_byte2);
@@ -42,6 +48,12 @@ void gameTick ()
 	// Collided
 	case true:
 		currentGameState = SCORE;
+
+		// Create the 2 bytes necessary for FPGA communication
+		CreateBytes (&tx_byte1, &tx_byte2, coll_detect);
+
+		// Sent bytes to FPGA
+		TransmitByte(tx_byte1, tx_byte2);
 	}
 }
 

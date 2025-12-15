@@ -5,24 +5,31 @@
 // Input uint8_t (pointer) Byte1 & Byte2
 // Output: None
 // This function reads the necessary data and compiles it into the data protocol separated in two bytes
-void CreateBytes (uint8_t* byte1, uint8_t* byte2)
+void CreateBytes (uint8_t* byte1, uint8_t* byte2, bool collision)
 {
 	//initialize byte1 and byte2 to 0000
 	*byte1 = 0;
 	*byte2 = 0;
 
-	// Place the gameState and new enemy locations into the first byte
-	*byte1 |= ((currentGameState & 0x0F) << 4);
-	*byte1 |= (NewEnemyMask & 0x0F);
-
-	//Place the player location into the second byte
-	switch (Player.lane)
+	switch (collision)
 	{
-	case 0: *byte2 |= ((0x08 & 0x0F) << 4); break;
-	case 1: *byte2 |= ((0x04 & 0x0F) << 4); break;
-	case 2: *byte2 |= ((0x02 & 0x0F) << 4); break;
-	case 3: *byte2 |= ((0x01 & 0x0F) << 4); break;
-	default: break;
+	case false:
+		// Place the gameState and new enemy locations into the first byte
+		*byte1 |= ((currentGameState & 0x0F) << 4);
+		*byte1 |= (NewEnemyMask & 0x0F);
+
+		//Place the player location into the second byte
+		switch (Player.lane)
+		{
+		case 0: *byte2 |= ((0x08 & 0x0F) << 4); break;
+		case 1: *byte2 |= ((0x04 & 0x0F) << 4); break;
+		case 2: *byte2 |= ((0x02 & 0x0F) << 4); break;
+		case 3: *byte2 |= ((0x01 & 0x0F) << 4); break;
+		default: break;
+		}
+	case true:
+		*byte1 |= ((currentGameState & 0x0F) << 4);
+		// Hier komt Score logic
 	}
 }
 

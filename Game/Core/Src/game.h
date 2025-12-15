@@ -41,7 +41,7 @@ extern void gameState(int);
 extern uint8_t EnemyCarGenerator(void);
 extern void addNewEnemy(int);
 extern void processNewEnemyMask(uint8_t);
-extern void CreateBytes (uint8_t*, uint8_t*);
+extern void CreateBytes (uint8_t*, uint8_t*, bool);
 extern void TransmitByte(uint8_t, uint8_t);
 extern void gameTick(void);
 extern bool Collision(void);
