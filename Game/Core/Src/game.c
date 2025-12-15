@@ -9,7 +9,9 @@ uint8_t NewEnemyMask = 0x00;
 uint8_t tx_byte1;
 uint8_t tx_byte2;
 
-uint8_t current_NewEnemyMask;
+uint8_t current_NewEnemyMask = 0x00;
+
+bool coll_detect = false;
 
 // Function gameTick
 // Developer: Sander van Beek
@@ -18,18 +20,29 @@ uint8_t current_NewEnemyMask;
 // This function runs one gameTick, and makes sure that everything that needs to run for a tick runs.
 void gameTick ()
 {
-	// Generate new enemies
-	current_NewEnemyMask = EnemyCarGenerator();
-	processNewEnemyMask(current_NewEnemyMask);
-	NewEnemyMask = current_NewEnemyMask;
+	// Check for collision
+	coll_detect = Collision();
+	// Make choice based on collision
+	switch (coll_detect)
+	{
+	// Not collided
+	case false:
+		// Generate new enemies
+		current_NewEnemyMask = EnemyCarGenerator();
+		processNewEnemyMask(current_NewEnemyMask);
+		NewEnemyMask = current_NewEnemyMask;
 
-	// Create the 2 bytes necessary for FPGA communication
-	CreateBytes (&tx_byte1, &tx_byte2);
+		// Create the 2 bytes necessary for FPGA communication
+		CreateBytes (&tx_byte1, &tx_byte2);
 
-	// Sent bytes to FPGA
-	TransmitByte(tx_byte1, tx_byte2);
+		// Sent bytes to FPGA
+		TransmitByte(tx_byte1, tx_byte2);
 
-	NewEnemyMask = 0x00;
+		NewEnemyMask = 0x00;
+	// Collided
+	case true:
+		currentGameState = SCORE;
+	}
 }
 
 // Function gameState

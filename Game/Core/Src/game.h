@@ -4,6 +4,7 @@
 
 #define MAX_ENEMYS 6
 #define OBSTACLE_SPAWN_Y 0
+#define PLAYER_Y_POS 370
 
 extern UART_HandleTypeDef huart3;;
 
@@ -43,3 +44,4 @@ extern void processNewEnemyMask(uint8_t);
 extern void CreateBytes (uint8_t*, uint8_t*);
 extern void TransmitByte(uint8_t, uint8_t);
 extern void gameTick(void);
+extern bool Collision(void);
