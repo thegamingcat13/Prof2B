@@ -8,8 +8,8 @@
 void CreateBytes (uint8_t* byte1, uint8_t* byte2, bool collision)
 {
 	//initialize byte1 and byte2 to 0000
-	*byte1 = 0;
-	*byte2 = 0;
+	*byte1 = 0x00;
+	*byte2 = 0x00;
 
 	switch (collision)
 	{
@@ -27,8 +27,19 @@ void CreateBytes (uint8_t* byte1, uint8_t* byte2, bool collision)
 		case 3: *byte2 |= ((0x01 & 0x0F) << 4); break;
 		default: break;
 		}
+		break;
 	case true:
+		uint8_t score1 = 0x00;
+		uint8_t score2 = 0x00;
+
+		score1 = (uint8_t)score >> 8;
+		score1 = score1 & 0x0F;
+		score2 = (uint8_t)score & 0xFF;
+
 		*byte1 |= ((currentGameState & 0x0F) << 4);
+		*byte1 |= (score1 & 0x0F);
+
+		*byte2 |= score2;
 		// Hier komt Score logic
 	}
 }

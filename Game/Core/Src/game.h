@@ -4,6 +4,7 @@
 
 #define MAX_ENEMYS 6
 #define OBSTACLE_SPAWN_Y 0
+#define ENEMY_SPAWN_DELAY 240
 #define PLAYER_Y_POS 370
 
 extern UART_HandleTypeDef huart3;;
