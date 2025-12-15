@@ -36,6 +36,8 @@ extern uint8_t tx_byte2;
 
 extern uint8_t current_NewEnemyMask;
 
+extern uint16_t score;
+
 extern void init(void);
 extern void gameState(int);
 extern uint8_t EnemyCarGenerator(void);
