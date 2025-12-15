@@ -2,16 +2,17 @@
 
 // Function: CreateBytes
 // Developer: Sander van Beek
-// Input uint8_t (pointer) Byte1 & Byte2
+// Input uint8_t (pointer) Byte1 & (pointer) Byte2 & bool collision
 // Output: None
 // This function reads the necessary data and compiles it into the data protocol separated in two bytes
-void CreateBytes (uint8_t* byte1, uint8_t* byte2, bool collision)
+// The output of the function differs whether or not we want to transmit a score or not
+void CreateBytes (uint8_t* byte1, uint8_t* byte2, bool* collision)
 {
 	//initialize byte1 and byte2 to 0000
 	*byte1 = 0x00;
 	*byte2 = 0x00;
 
-	switch (collision)
+	switch (*collision)
 	{
 	case false:
 		// Place the gameState and new enemy locations into the first byte

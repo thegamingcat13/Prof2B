@@ -39,7 +39,7 @@ void gameTick ()
 		NewEnemyMask = current_NewEnemyMask;
 
 		// Create the 2 bytes necessary for FPGA communication
-		CreateBytes (&tx_byte1, &tx_byte2, coll_detect);
+		CreateBytes (&tx_byte1, &tx_byte2, &coll_detect);
 
 		// Sent bytes to FPGA
 		TransmitByte(tx_byte1, tx_byte2);
@@ -50,7 +50,7 @@ void gameTick ()
 		currentGameState = SCORE;
 
 		// Create the 2 bytes necessary for FPGA communication
-		CreateBytes (&tx_byte1, &tx_byte2, coll_detect);
+		CreateBytes (&tx_byte1, &tx_byte2, &coll_detect);
 
 		// Sent bytes to FPGA
 		TransmitByte(tx_byte1, tx_byte2);
