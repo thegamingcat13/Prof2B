@@ -130,7 +130,7 @@ int main(void)
 
 	  gameTick(); //Do a game tick
 
-	  HAL_Delay(100); //One gametick every 200ms allowed
+	  HAL_Delay(TICK_SPEED); //One gametick every 200ms allowed
     /* USER CODE END WHILE */
     MX_USB_HOST_Process();
 
