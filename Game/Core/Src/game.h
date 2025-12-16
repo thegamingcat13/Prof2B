@@ -36,6 +36,7 @@ extern ObstacleCar Enemy[MAX_ENEMYS];
 extern GameState_t currentGameState;
 
 extern uint8_t NewEnemyMask;
+extern int PixelsMoved;
 
 extern uint8_t tx_byte1;
 extern uint8_t tx_byte2;

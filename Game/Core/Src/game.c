@@ -13,6 +13,8 @@ uint8_t current_NewEnemyMask = 0x00;
 
 uint16_t score = 0;
 
+int PixelsMoved = 0;
+
 bool coll_detect = false;
 
 // Function gameTick
@@ -33,10 +35,16 @@ void gameTick ()
 		score++;
 		score &= 0x0FFF;
 
-		// Generate new enemies
-		current_NewEnemyMask = EnemyCarGenerator();
-		processNewEnemyMask(current_NewEnemyMask);
-		NewEnemyMask = current_NewEnemyMask;
+		if (PixelsMoved >= 240)
+		{
+			// Reset PixelsMoved variable
+			PixelsMoved = 0;
+
+			// Generate new enemies
+			current_NewEnemyMask = EnemyCarGenerator();
+			processNewEnemyMask(current_NewEnemyMask);
+			NewEnemyMask = current_NewEnemyMask;
+		}
 
 		// Create the 2 bytes necessary for FPGA communication
 		CreateBytes (&tx_byte1, &tx_byte2, &coll_detect);
