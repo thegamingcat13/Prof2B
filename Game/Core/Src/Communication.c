@@ -30,18 +30,20 @@ void CreateBytes (uint8_t* byte1, uint8_t* byte2, bool* collision)
 		}
 		break;
 	case true:
+		// Temporary variables for storing the split core bytes
 		uint8_t score1 = 0x00;
 		uint8_t score2 = 0x00;
 
+		// Splitting the score bytes and storing them in individual bytes
 		score1 = (uint8_t)score >> 8;
 		score1 = score1 & 0x0F;
 		score2 = (uint8_t)score & 0xFF;
 
+		// Creating the bytes for UART transmit
 		*byte1 |= ((currentGameState & 0x0F) << 4);
 		*byte1 |= (score1 & 0x0F);
 
 		*byte2 |= score2;
-		// Hier komt Score logic
 	}
 }
 
