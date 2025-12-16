@@ -29,7 +29,7 @@ void gameTick ()
 	{
 	// Not collided
 	case false:
-		// Incease score and make sure it doesn't exceed the max
+		// Increase score and make sure it doesn't exceed the max
 		score++;
 		score &= 0x0FFF;
 
