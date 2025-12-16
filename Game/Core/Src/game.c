@@ -66,8 +66,8 @@ void gameState (int state)
 {
 	switch (state)
 	{
-	case 1: currentGameState = STOP;
-	case 2: currentGameState = RUNNING;
+	case 1: currentGameState = RUNNING;
+	case 2: currentGameState = STOP;
 	case 3: currentGameState = SCORE;
 	default : currentGameState = STOP;
 	}
