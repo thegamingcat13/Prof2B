@@ -8,6 +8,10 @@
 #define PLAYER_Y_POS 370
 #define TICK_SPEED 100
 
+#define RUN 1
+#define HALT 2
+#define POINTS 3
+
 extern UART_HandleTypeDef huart3;;
 
 typedef struct {

@@ -116,7 +116,7 @@ int main(void)
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
 	init(); // initialize structures and randomizer
-	gameState(2); // set the gamestate to running
+	gameState(RUN); // set the gamestate to running
 
   /* USER CODE END 2 */
 

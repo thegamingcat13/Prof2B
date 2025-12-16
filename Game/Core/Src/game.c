@@ -47,7 +47,8 @@ void gameTick ()
 		NewEnemyMask = 0x00;
 	// Collided
 	case true:
-		currentGameState = SCORE;
+		// Set gameState to score
+		gameState(RUN);
 
 		// Create the 2 bytes necessary for FPGA communication
 		CreateBytes (&tx_byte1, &tx_byte2, &coll_detect);
