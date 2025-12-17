@@ -8,6 +8,9 @@
 #define PLAYER_Y_POS 370
 #define TICK_SPEED 100
 
+#define RIGHT 1
+#define LEFT 2
+
 #define RUN 1
 #define HALT 2
 #define POINTS 3
