@@ -12,7 +12,8 @@
 #define HALT 2
 #define POINTS 3
 
-extern UART_HandleTypeDef huart3;;
+extern UART_HandleTypeDef huart3;
+extern TIM_HandleTypeDef htim3;
 
 typedef struct {
     int lane;

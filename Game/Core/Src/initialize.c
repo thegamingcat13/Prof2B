@@ -40,6 +40,7 @@ void initializeRandomSeed()
 // This function will be run once and runs all the other initalization functions
 void init()
 {
+	HAL_TIM_Base_Start_IT(&htim3);
 	initStructures();
 	initializeRandomSeed();
 }

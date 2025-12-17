@@ -53,16 +53,18 @@ void gameTick ()
 		TransmitByte(tx_byte1, tx_byte2);
 
 		NewEnemyMask = 0x00;
+		break;
 	// Collided
 	case true:
 		// Set gameState to score
-		gameState(RUN);
+		gameState(SCORE);
 
 		// Create the 2 bytes necessary for FPGA communication
 		CreateBytes (&tx_byte1, &tx_byte2, &coll_detect);
 
 		// Sent bytes to FPGA
 		TransmitByte(tx_byte1, tx_byte2);
+		break;
 	}
 }
 
