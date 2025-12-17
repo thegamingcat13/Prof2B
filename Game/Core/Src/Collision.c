@@ -19,7 +19,6 @@ bool Collision()
 			{
 				collided = true;
 				break;
-				;
 			}
 		}
 	}

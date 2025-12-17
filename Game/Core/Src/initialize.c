@@ -44,3 +44,47 @@ void init()
 	initStructures();
 	initializeRandomSeed();
 }
+
+//Function : Clock_change
+// Developer: Sander van Beek
+// Input: int* clock_speed (in Hz)
+// Output: status
+// This function changed the speed of tim3 from the base 60Hz value to either 70Hz or 80Hz
+int Clock_change(int* clock_speed)
+{
+	// Variable for status check
+	HAL_StatusTypeDef status;
+
+	// Stop timer
+	HAL_TIM_Base_Stop_IT(&htim3);
+
+	// Check requestion frequency
+	switch (*clock_speed)
+	{
+	case 70:
+		// Change timer period for 70Hz frequency
+		htim3.Init.Period = 856;
+		break;
+	case 80:
+		// Change timer period for 80Hz frequency
+		htim3.Init.Period = 749;
+		break;
+	}
+
+	// Initialize timer
+	status = HAL_TIM_Base_Init(&htim3);
+
+	// Check status of initialization
+	if (status != HAL_OK)
+		return 0;
+
+	// Start timer in interupt mode
+	status = HAL_TIM_Base_Start_IT(&htim3);
+
+	// Check status of started timer
+	if (status != HAL_OK)
+		return 0;
+
+	return 1;
+
+}

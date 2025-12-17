@@ -24,8 +24,10 @@ bool coll_detect = false;
 // This function runs one gameTick, and makes sure that everything that needs to run for a tick runs.
 void gameTick ()
 {
+
 	// Check for collision
 	coll_detect = Collision();
+
 	// Make choice based on collision
 	switch (coll_detect)
 	{
