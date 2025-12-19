@@ -63,11 +63,11 @@ int Clock_change(int* clock_speed)
 	{
 	case 70:
 		// Change timer period for 140Hz frequency
-		htim3.Init.Period = 599;
+		htim3.Init.Prescaler = 349;
 		break;
 	case 80:
 		// Change timer period for 160Hz frequency
-		htim3.Init.Period = 524;
+		htim3.Init.Prescaler = 299;
 		break;
 	}
 

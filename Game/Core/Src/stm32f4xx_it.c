@@ -212,8 +212,20 @@ void TIM3_IRQHandler(void)
 			Enemy[i].yPosition++;
 	}
 
-	HAL_GPIO_WritePin(Clock_FPGA_GPIO_Port, Clock_FPGA_Pin, SET);
-	HAL_GPIO_WritePin(Clock_FPGA_GPIO_Port, Clock_FPGA_Pin, RESET);
+	bool clock_high = false;
+
+	// Create a clock signal with a duty cycle of 50%
+	switch (clock_high)
+	{
+	case false:
+		HAL_GPIO_WritePin(Clock_FPGA_GPIO_Port, Clock_FPGA_Pin, SET);
+		clock_high = true;
+		break;
+	case true:
+		HAL_GPIO_WritePin(Clock_FPGA_GPIO_Port, Clock_FPGA_Pin, RESET);
+		clock_high = false;
+		break;
+	}
 
 	PixelsMoved++;
 
