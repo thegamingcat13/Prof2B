@@ -42,16 +42,10 @@ void gameTick (bool* option)
 			score++;
 			score &= 0x0FFF;
 
-			if (PixelsMoved >= 240)
-			{
-				// Reset PixelsMoved variable
-				PixelsMoved = 0;
-
-				// Generate new enemies
-				current_NewEnemyMask = EnemyCarGenerator();
-				processNewEnemyMask(current_NewEnemyMask);
-				NewEnemyMask = current_NewEnemyMask;
-			}
+			// Generate new enemies
+			current_NewEnemyMask = EnemyCarGenerator();
+			processNewEnemyMask(current_NewEnemyMask);
+			NewEnemyMask = current_NewEnemyMask;
 
 			// Create the 2 bytes necessary for FPGA communication
 			CreateBytes (&tx_byte1, &tx_byte2, &gameinfo);

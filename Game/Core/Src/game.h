@@ -4,7 +4,6 @@
 
 #define MAX_ENEMYS 3
 #define OBSTACLE_SPAWN_Y 0
-#define ENEMY_SPAWN_DELAY 240
 #define PLAYER_Y_POS 370
 #define TICK_SPEED 100
 
