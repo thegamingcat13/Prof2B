@@ -115,8 +115,14 @@ int main(void)
   MX_USART3_UART_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-	init(); // initialize structures and randomizer
-	gameState(RUN); // set the gamestate to running
+
+    bool gameinfo = true;
+
+     // Initialize structures and randomizer
+	init();
+
+	// Set the gamestate to running
+	gameState(RUN);
 
   /* USER CODE END 2 */
 
@@ -124,7 +130,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  switch (Player.lane) //dummy player movement
+	  switch (Player.lane) // Dummy player movement
 	  {
 	  case 0: Player.lane = 1; break;
 	  case 1: Player.lane = 2; break;
@@ -132,9 +138,15 @@ int main(void)
 	  default: Player.lane = 0; break;
 	  }
 
-	  gameTick(); //Do a game tick
+	  switch (gameinfo)
+	  {
+	  case true: gameinfo = false; break;
+	  case false: gameinfo = true; break;
+	  }
 
-	  HAL_Delay(TICK_SPEED / 2); //One gametick every 200ms allowed
+	  gameTick(&gameinfo); // Do a game tick
+
+	  HAL_Delay(TICK_SPEED / 2); // One gametick every 200ms allowed
     /* USER CODE END WHILE */
     MX_USB_HOST_Process();
 
