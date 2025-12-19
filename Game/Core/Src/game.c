@@ -80,11 +80,7 @@ void gameTick (bool* gameinfo)
 
 		// Sent bytes to FPGA
 		TransmitByte(tx_byte1, tx_byte2);
-
 	}
-
-
-
 }
 
 // Function gameState
