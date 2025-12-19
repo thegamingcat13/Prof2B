@@ -22,7 +22,7 @@ bool coll_detect = false;
 // Input: None
 // Output: None
 // This function runs one gameTick, and makes sure that everything that needs to run for a tick runs.
-void gameTick (bool* option)
+void gameTick (bool* gameinfo)
 {
 	switch (*gameinfo)
 	{
@@ -48,7 +48,7 @@ void gameTick (bool* option)
 			NewEnemyMask = current_NewEnemyMask;
 
 			// Create the 2 bytes necessary for FPGA communication
-			CreateBytes (&tx_byte1, &tx_byte2, &gameinfo);
+			CreateBytes (&tx_byte1, &tx_byte2, gameinfo);
 
 			// Sent bytes to FPGA
 			TransmitByte(tx_byte1, tx_byte2);

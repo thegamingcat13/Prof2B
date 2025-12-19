@@ -13,7 +13,7 @@
 #define RUN 1
 #define HALT 2
 #define POINTS_DEATH 3
-#define LIVE_POINTS 4
+#define POINTS_LIVE 4
 
 extern UART_HandleTypeDef huart3;
 extern TIM_HandleTypeDef htim3;
@@ -57,5 +57,5 @@ extern void addNewEnemy(int);
 extern void processNewEnemyMask(uint8_t);
 extern void CreateBytes (uint8_t*, uint8_t*, bool*);
 extern void TransmitByte(uint8_t, uint8_t);
-extern void gameTick(void);
+extern void gameTick(bool*);
 extern bool Collision(void);
