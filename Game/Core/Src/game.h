@@ -50,6 +50,8 @@ extern uint8_t current_NewEnemyMask;
 
 extern uint16_t score;
 
+extern bool clock_high;
+
 extern void init(void);
 extern void gameState(int);
 extern uint8_t EnemyCarGenerator(void);
@@ -59,3 +61,4 @@ extern void CreateBytes (uint8_t*, uint8_t*, bool*);
 extern void TransmitByte(uint8_t, uint8_t);
 extern void gameTick(bool*);
 extern bool Collision(void);
+extern bool Clock_change(int*);

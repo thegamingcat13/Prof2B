@@ -53,7 +53,7 @@ USART_HandleTypeDef husart2;
 UART_HandleTypeDef huart3;
 
 /* USER CODE BEGIN PV */
-
+bool clock_high = false;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -115,7 +115,6 @@ int main(void)
   MX_USART3_UART_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-
     bool gameinfo = true;
 
      // Initialize structures and randomizer

@@ -212,8 +212,6 @@ void TIM3_IRQHandler(void)
 			Enemy[i].yPosition++;
 	}
 
-	bool clock_high = false;
-
 	// Create a clock signal with a duty cycle of 50%
 	switch (clock_high)
 	{

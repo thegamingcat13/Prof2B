@@ -13,6 +13,9 @@ uint8_t current_NewEnemyMask = 0x00;
 
 uint16_t score = 0;
 
+int Speed_140 = 140;
+int Speed_160 = 160;
+
 int PixelsMoved = 0;
 
 bool coll_detect = false;
@@ -42,6 +45,35 @@ void gameTick (bool* gameinfo)
 			score++;
 			score &= 0x0FFF;
 
+			if (score == 500)
+			{
+				bool Clock_valid = Clock_change(&Speed_140);
+				switch (Clock_valid)
+				{
+				case false:
+					gameState(POINTS_DEATH);
+					bool dummy_collision = true;
+					CreateBytes (&tx_byte2, &tx_byte2, &dummy_collision);
+					TransmitByte(tx_byte1, tx_byte2);
+				case true: break;
+				}
+
+			}
+
+			if (score == 1000)
+			{
+				bool Clock_valid = Clock_change(&Speed_160);
+				switch (Clock_valid)
+				{
+				case false:
+					gameState(POINTS_DEATH);
+					bool dummy_collision = true;
+					CreateBytes (&tx_byte2, &tx_byte2, &dummy_collision);
+					TransmitByte(tx_byte1, tx_byte2);
+				case true: break;
+				}
+			}
+
 			// Generate new enemies
 			current_NewEnemyMask = EnemyCarGenerator();
 			processNewEnemyMask(current_NewEnemyMask);
@@ -56,18 +88,18 @@ void gameTick (bool* gameinfo)
 			NewEnemyMask = 0x00;
 			break;
 			// Collided
-			case true:
-				// Set gameState to score with death
-				gameState(POINTS_DEATH);
+		case true:
+			// Set gameState to score with death
+			gameState(POINTS_DEATH);
 
-				// Create the 2 bytes necessary for FPGA communication
-				CreateBytes (&tx_byte1, &tx_byte2, &coll_detect);
+			// Create the 2 bytes necessary for FPGA communication
+			CreateBytes (&tx_byte1, &tx_byte2, &coll_detect);
 
-				// Sent bytes to FPGA
-				TransmitByte(tx_byte1, tx_byte2);
-				break;
-			}
+			// Sent bytes to FPGA
+			TransmitByte(tx_byte1, tx_byte2);
 			break;
+		}
+		break;
 	case false:
 		// Dummy collision variable necesary for sending score data
 		bool dummy_collision = true;

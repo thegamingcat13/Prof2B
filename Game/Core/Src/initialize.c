@@ -50,7 +50,7 @@ void init()
 // Input: int* clock_speed (in Hz)
 // Output: status
 // This function changed the speed of tim3 from the base 60Hz value to either 70Hz or 80Hz
-int Clock_change(int* clock_speed)
+bool Clock_change(int* clock_speed)
 {
 	// Variable for status check
 	HAL_StatusTypeDef status;
@@ -61,11 +61,11 @@ int Clock_change(int* clock_speed)
 	// Check requestion frequency
 	switch (*clock_speed)
 	{
-	case 70:
+	case 140:
 		// Change timer period for 140Hz frequency
 		htim3.Init.Prescaler = 349;
 		break;
-	case 80:
+	case 160:
 		// Change timer period for 160Hz frequency
 		htim3.Init.Prescaler = 299;
 		break;
@@ -76,15 +76,15 @@ int Clock_change(int* clock_speed)
 
 	// Check status of initialization
 	if (status != HAL_OK)
-		return 0;
+		return false;
 
 	// Start timer in interupt mode
 	status = HAL_TIM_Base_Start_IT(&htim3);
 
 	// Check status of started timer
 	if (status != HAL_OK)
-		return 0;
+		return false;
 
-	return 1;
+	return true;
 
 }
