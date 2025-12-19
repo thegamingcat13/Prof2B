@@ -32,7 +32,8 @@ typedef struct {
 typedef enum {
 	RUNNING = 0x08,
 	STOP = 0x0B,
-	SCORE = 0x0E,
+	LIVE_SCORE = 0x0A,
+	SCORE_DEATH = 0x0E,
 } GameState_t;
 
 extern PlayerCar Player;
