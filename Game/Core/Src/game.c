@@ -27,7 +27,7 @@ void gameTick (bool* option)
 	switch (*gameinfo)
 	{
 	case true:
-		// set gameState to running
+		// Set gameState to running
 		gameState(RUN);
 
 		// Check for collision
@@ -75,7 +75,7 @@ void gameTick (bool* option)
 			}
 			break;
 	case false:
-		// dummy collision variable necesary for sending score data
+		// Dummy collision variable necesary for sending score data
 		bool dummy_collision = true;
 
 		// Set gameState to score without death
