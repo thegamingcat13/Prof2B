@@ -22,52 +22,75 @@ bool coll_detect = false;
 // Input: None
 // Output: None
 // This function runs one gameTick, and makes sure that everything that needs to run for a tick runs.
-void gameTick ()
+void gameTick (bool* option)
 {
-
-	// Check for collision
-	coll_detect = Collision();
-
-	// Make choice based on collision
-	switch (coll_detect)
+	switch (*gameinfo)
 	{
-	// Not collided
-	case false:
-		// Increase score and make sure it doesn't exceed the max
-		score++;
-		score &= 0x0FFF;
-
-		if (PixelsMoved >= 240)
-		{
-			// Reset PixelsMoved variable
-			PixelsMoved = 0;
-
-			// Generate new enemies
-			current_NewEnemyMask = EnemyCarGenerator();
-			processNewEnemyMask(current_NewEnemyMask);
-			NewEnemyMask = current_NewEnemyMask;
-		}
-
-		// Create the 2 bytes necessary for FPGA communication
-		CreateBytes (&tx_byte1, &tx_byte2, &coll_detect);
-
-		// Sent bytes to FPGA
-		TransmitByte(tx_byte1, tx_byte2);
-
-		NewEnemyMask = 0x00;
-		break;
-	// Collided
 	case true:
-		// Set gameState to score
-		gameState(POINTS_DEATH);
+		// set gameState to running
+		gameState(RUN);
+
+		// Check for collision
+		coll_detect = Collision();
+
+		// Make choice based on collision
+		switch (coll_detect)
+		{
+		// Not collided
+		case false:
+			// Increase score and make sure it doesn't exceed the max
+			score++;
+			score &= 0x0FFF;
+
+			if (PixelsMoved >= 240)
+			{
+				// Reset PixelsMoved variable
+				PixelsMoved = 0;
+
+				// Generate new enemies
+				current_NewEnemyMask = EnemyCarGenerator();
+				processNewEnemyMask(current_NewEnemyMask);
+				NewEnemyMask = current_NewEnemyMask;
+			}
+
+			// Create the 2 bytes necessary for FPGA communication
+			CreateBytes (&tx_byte1, &tx_byte2, &gameinfo);
+
+			// Sent bytes to FPGA
+			TransmitByte(tx_byte1, tx_byte2);
+
+			NewEnemyMask = 0x00;
+			break;
+			// Collided
+			case true:
+				// Set gameState to score with death
+				gameState(POINTS_DEATH);
+
+				// Create the 2 bytes necessary for FPGA communication
+				CreateBytes (&tx_byte1, &tx_byte2, &coll_detect);
+
+				// Sent bytes to FPGA
+				TransmitByte(tx_byte1, tx_byte2);
+				break;
+			}
+			break;
+	case false:
+		// dummy collision variable necesary for sending score data
+		bool dummy_collision = true;
+
+		// Set gameState to score without death
+		gameState(POINTS_LIVE);
 
 		// Create the 2 bytes necessary for FPGA communication
-		CreateBytes (&tx_byte1, &tx_byte2, &coll_detect);
+		CreateBytes (&tx_byte1, &tx_byte2, &dummy_collision);
 
 		// Sent bytes to FPGA
 		TransmitByte(tx_byte1, tx_byte2);
-		break;
+
 	}
+
+
+
 }
 
 // Function gameState
