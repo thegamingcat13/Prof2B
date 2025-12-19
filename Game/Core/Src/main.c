@@ -115,7 +115,6 @@ int main(void)
   MX_USART3_UART_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-    bool gameinfo = true;
 
      // Initialize structures and randomizer
 	init();
@@ -137,15 +136,9 @@ int main(void)
 	  default: Player.lane = 0; break;
 	  }
 
-	  switch (gameinfo)
-	  {
-	  case true: gameinfo = false; break;
-	  case false: gameinfo = true; break;
-	  }
+	  gameTick(); // Do a game tick
 
-	  gameTick(&gameinfo); // Do a game tick
-
-	  HAL_Delay(TICK_SPEED / 2); // One gametick every 200ms allowed
+	  HAL_Delay(TICK_SPEED); // One gametick every 200ms allowed
     /* USER CODE END WHILE */
     MX_USB_HOST_Process();
 
