@@ -59,7 +59,7 @@ void gameTick ()
 	// Collided
 	case true:
 		// Set gameState to score
-		gameState(SCORE);
+		gameState(POINTS_DEATH);
 
 		// Create the 2 bytes necessary for FPGA communication
 		CreateBytes (&tx_byte1, &tx_byte2, &coll_detect);
@@ -81,7 +81,8 @@ void gameState (int state)
 	{
 	case 1: currentGameState = RUNNING;
 	case 2: currentGameState = STOP;
-	case 3: currentGameState = SCORE;
+	case 3: currentGameState = SCORE_DEATH;
+	case 4: currentGameState = LIVE_SCORE;
 	default : currentGameState = STOP;
 	}
 }

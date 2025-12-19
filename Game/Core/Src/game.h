@@ -13,7 +13,8 @@
 
 #define RUN 1
 #define HALT 2
-#define POINTS 3
+#define POINTS_DEATH 3
+#define LIVE_POINTS 4
 
 extern UART_HandleTypeDef huart3;
 extern TIM_HandleTypeDef htim3;
