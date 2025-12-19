@@ -62,12 +62,12 @@ int Clock_change(int* clock_speed)
 	switch (*clock_speed)
 	{
 	case 70:
-		// Change timer period for 70Hz frequency
-		htim3.Init.Period = 856;
+		// Change timer period for 140Hz frequency
+		htim3.Init.Period = 599;
 		break;
 	case 80:
-		// Change timer period for 80Hz frequency
-		htim3.Init.Period = 749;
+		// Change timer period for 160Hz frequency
+		htim3.Init.Period = 524;
 		break;
 	}
 

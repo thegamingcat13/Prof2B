@@ -2,7 +2,7 @@
 #include <stdint.h> // For uint8_t
 #include "usb_host.h"
 
-#define MAX_ENEMYS 6
+#define MAX_ENEMYS 3
 #define OBSTACLE_SPAWN_Y 0
 #define ENEMY_SPAWN_DELAY 240
 #define PLAYER_Y_POS 370
@@ -31,8 +31,8 @@ typedef struct {
 
 typedef enum {
 	RUNNING = 0x08,
-	STOP = 0x04,
-	SCORE = 0x02,
+	STOP = 0x0B,
+	SCORE = 0x0E,
 } GameState_t;
 
 extern PlayerCar Player;
