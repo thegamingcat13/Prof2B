@@ -219,6 +219,7 @@ void TIM3_IRQHandler(void)
 	{
 	case false:
 		HAL_GPIO_WritePin(Clock_FPGA_GPIO_Port, Clock_FPGA_Pin, SET);
+		PixelsMoved++;
 		clock_high = true;
 		break;
 	case true:
@@ -226,8 +227,6 @@ void TIM3_IRQHandler(void)
 		clock_high = false;
 		break;
 	}
-
-	PixelsMoved++;
 
   /* USER CODE END TIM3_IRQn 0 */
   HAL_TIM_IRQHandler(&htim3);
