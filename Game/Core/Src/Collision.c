@@ -12,9 +12,10 @@ bool Collision()
 	// Loop through all enemy's
 	for (int i = 0; i < MAX_ENEMYS; i++)
 	{
-		// Check
+		// Check if enemy lane is the same as the players
 		if (Player.lane == Enemy[i].lane)
 		{
+			// Check for collision based on y coordinates of enemy
 			if (PLAYER_Y_POS - Enemy[i].yPosition <= 0)
 			{
 				collided = true;
