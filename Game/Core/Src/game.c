@@ -30,8 +30,6 @@ void gameTick ()
 	// Set gameState to running if we didn't already crash
 	if (!(currentGameState == SCORE_DEATH))
 	{
-		gameState(RUN);
-
 		// Check for collision
 		coll_detect = Collision();
 	}
@@ -47,14 +45,19 @@ void gameTick ()
 
 		if (score == 500)
 		{
+			// Change clock speed to 140hz
 			bool Clock_valid = Clock_change(&Speed_140);
+			// Check if clock change succeeded
 			switch (Clock_valid)
 			{
+			// if clock change failed end game
 			case false:
 				gameState(POINTS_DEATH);
 				bool dummy_collision = true;
 				CreateBytes (&tx_byte2, &tx_byte2, &dummy_collision);
 				TransmitByte(tx_byte1, tx_byte2);
+				break;
+			// if clock change succeeded continue
 			case true: break;
 			}
 
@@ -62,14 +65,19 @@ void gameTick ()
 
 		if (score == 1000)
 		{
+			// Change clock speed to 160hz
 			bool Clock_valid = Clock_change(&Speed_160);
+			// Check if clock change succeeded
 			switch (Clock_valid)
 			{
+			// if clock change failed end game
 			case false:
 				gameState(POINTS_DEATH);
 				bool dummy_collision = true;
 				CreateBytes (&tx_byte2, &tx_byte2, &dummy_collision);
 				TransmitByte(tx_byte1, tx_byte2);
+				break;
+				// if clock change succeeded continue
 			case true: break;
 			}
 		}
