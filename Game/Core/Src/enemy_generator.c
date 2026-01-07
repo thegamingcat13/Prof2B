@@ -21,23 +21,31 @@ uint8_t EnemyCarGenerator()
 // Function: addNewObstacleCar
 // Developer: Sander van Beek
 // Input: int lane
-// Output: None
+// Output: Bool
 // This function add the information for the new enemy cars to the enemy structure array.
 // It read the start lane from the internal lane variable which is externally determined from the newenemycarmask
-void addNewEnemy(int lane)
+// The function returns whether or not the creation of the enemy succeeded
+bool addNewEnemy(int lane)
 {
+    // Check if there already is a car in the requested lane
+    for (int i = 0; i < MAX_ENEMYS; i++) {
+        if (Enemy[i].isActive && Enemy[i].lane == lane) {
+            return false; // Failed: Lane occupied
+        }
+    }
+
     // Find an inactive slot in the array
     for (int i = 0; i < MAX_ENEMYS; i++) {
         if (!Enemy[i].isActive) {
-        	Enemy[i].lane = lane;
-        	Enemy[i].yPosition = OBSTACLE_SPAWN_Y; // Start at the top
-        	Enemy[i].isActive = true;
+            Enemy[i].lane = lane;
+            Enemy[i].yPosition = OBSTACLE_SPAWN_Y;
+            Enemy[i].isActive = true;
 
-            // For debugging:
-            printf("Spawned new car in lane %d at y=%d\n", lane, Enemy[i].yPosition); //Debug
-            return; // Car added, so exit the function
+            printf("Spawned new car in lane %d\n", lane);
+            return true; // Success
         }
     }
+    return false; // Failed: No empty slots in MAX_ENEMYS
 }
 
 // Function: processNewEnemyMask
@@ -45,14 +53,21 @@ void addNewEnemy(int lane)
 // Input: uint8_t mask
 // Output: None
 // This function translates the NewEnemyMask into a interger value that we can use to fill the structure
-void processNewEnemyMask(uint8_t mask)
+// We also check if we succesfully added the new enemy to the structure if now we modify the mask
+// This way we don't sent wrong information to the fpga
+void processNewEnemyMask(uint8_t *mask)
 {
-	if (mask == 0x00) // if mask is empty or 0 we do nothing
-		return;
+    if (*mask == 0x00)
+        return;
 
-	for (int lane = 0; lane <4; lane++) //Check for 4 different bits
-	{
-		if ((mask >> lane) & 0x01)
-			addNewEnemy(lane);
-	}
+    for (int lane = 0; lane < 4; lane++) {
+        // Check if the bit for this lane is set
+        if ((*mask >> lane) & 0x01) {
+            // Try to add the enemy
+            if (!addNewEnemy(lane)) {
+                // If it failed, clear the bit in the mask
+                *mask &= ~(1 << lane);
+            }
+        }
+    }
 }

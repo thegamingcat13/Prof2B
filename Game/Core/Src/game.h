@@ -2,7 +2,7 @@
 #include <stdint.h> // For uint8_t
 #include "usb_host.h"
 
-#define MAX_ENEMYS 3
+#define MAX_ENEMYS 4
 #define OBSTACLE_SPAWN_Y 0
 #define PLAYER_Y_POS 370
 #define TICK_SPEED 100
@@ -55,8 +55,8 @@ extern bool clock_high;
 extern void init(void);
 extern void gameState(int);
 extern uint8_t EnemyCarGenerator(void);
-extern void addNewEnemy(int);
-extern void processNewEnemyMask(uint8_t);
+extern bool addNewEnemy(int);
+extern void processNewEnemyMask(uint8_t*);
 extern void CreateBytes (uint8_t*, uint8_t*, bool*);
 extern void TransmitByte(uint8_t, uint8_t);
 extern void gameTick(void);

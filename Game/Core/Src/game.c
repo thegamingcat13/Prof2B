@@ -27,11 +27,14 @@ bool coll_detect = false;
 // This function runs one gameTick, and makes sure that everything that needs to run for a tick runs.
 void gameTick ()
 {
-	// Set gameState to running
-	gameState(RUN);
+	// Set gameState to running if we didn't already crash
+	if (!(currentGameState == SCORE_DEATH))
+	{
+		gameState(RUN);
 
-	// Check for collision
-	//coll_detect = Collision();
+		// Check for collision
+		coll_detect = Collision();
+	}
 
 	// Make choice based on collision
 	switch (coll_detect)
@@ -73,7 +76,7 @@ void gameTick ()
 
 		// Generate new enemies
 		current_NewEnemyMask = EnemyCarGenerator();
-		processNewEnemyMask(current_NewEnemyMask);
+		processNewEnemyMask(&current_NewEnemyMask);
 		NewEnemyMask = current_NewEnemyMask;
 
 		// Create the 2 bytes necessary for FPGA communication
@@ -107,10 +110,9 @@ void gameState (int state)
 {
 	switch (state)
 	{
-	case 1: currentGameState = RUNNING;
-	case 2: currentGameState = STOP;
-	case 3: currentGameState = SCORE_DEATH;
-	case 4: currentGameState = LIVE_SCORE;
-	default : currentGameState = STOP;
+	case 1: currentGameState = RUNNING; break;
+	case 2: currentGameState = STOP; break;
+	case 3: currentGameState = SCORE_DEATH; break;
+	default : currentGameState = STOP; break;
 	}
 }
