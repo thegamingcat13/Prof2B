@@ -10,12 +10,13 @@
 // The location of the new cars is randomized using rand()
 uint8_t EnemyCarGenerator()
 {
-	uint8_t mask; // internal variable for the car mask
-	do
+	uint32_t mask; // internal variable for the car mask
+
+	if (HAL_RNG_GenerateRandomNumber(&hrng, &mask) == HAL_OK)
 	{
-		mask = rand() % 16; //Generate random value between 0 and 15 (0000 to 1111)
-	} while (mask == 15); //Keep generating the value until it isn't 15
-	return mask;
+		return (uint8_t)(mask % 15);
+	}
+	return (uint8_t)(HAL_GetTick() % 15);
 }
 
 // Function: addNewObstacleCar

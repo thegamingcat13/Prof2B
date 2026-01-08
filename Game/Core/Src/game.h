@@ -17,6 +17,7 @@
 
 extern UART_HandleTypeDef huart3;
 extern TIM_HandleTypeDef htim3;
+extern RNG_HandleTypeDef hrng;
 
 typedef struct {
     int lane;
