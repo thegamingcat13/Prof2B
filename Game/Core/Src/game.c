@@ -16,8 +16,6 @@ uint16_t score = 0;
 int Speed_140 = 140;
 int Speed_160 = 160;
 
-int PixelsMoved = 0;
-
 bool coll_detect = false;
 
 // Function gameTick
