@@ -7,7 +7,7 @@
 // Input: None
 // Output: uint8_t with new car location mask
 // This function generates a mask that contains the location of the new enemy cars in a byte.
-// The location of the new cars is randomized using rand()
+// The location of the new cars is randomized using the hardware rng generator on the stm32
 uint8_t EnemyCarGenerator()
 {
 	uint32_t mask; // internal variable for the car mask

@@ -23,19 +23,6 @@ void initStructures()
 	Player.isActive = false;
 }
 
-//// Function: initializeRandomSeed
-//// Developer: Sander van Beek
-//// Input: None
-//// Output: None
-//// This function start the seed for the randomizer
-//void initializeRandomSeed()
-//{
-//	uint32_t seed = 0;
-//	if (HAL_RNG_GenerateRandomNumber(&hrng, &seed) == HALOK)
-//		srand(seed);
-//	srand((unsigned int) HAL_GetTick());
-//}
-
 // Function: init
 // Developer: Sander van Beek
 // Input: None
@@ -45,7 +32,6 @@ void init()
 {
 	HAL_TIM_Base_Start_IT(&htim3);
 	initStructures();
-//	initializeRandomSeed();
 }
 
 //Function : Clock_change
