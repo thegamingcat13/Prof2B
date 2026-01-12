@@ -3,7 +3,7 @@
 #include "usb_host.h"
 
 #define MAX_ENEMYS 4
-#define OBSTACLE_SPAWN_Y 0
+#define OBSTACLE_SPAWN_Y 38
 #define PLAYER_Y_POS 370
 #define TICK_SPEED 100
 

@@ -26,19 +26,28 @@ void initStructures()
 // Function: init
 // Developer: Sander van Beek
 // Input: None
-// Output; None
+// Output: None
 // This function will be run once and runs all the other initalization functions
 void init()
 {
+	// Initialize timer
 	HAL_TIM_Base_Start_IT(&htim3);
+
+	// Initialize structure
 	initStructures();
+
+	// Sent reset signal to FPGA so make sure all start positions are set
+	// SET is done two times to make the signal lenght around 12ns
+	HAL_GPIO_WritePin(FPGA_Reset_GPIO_Port, Clock_FPGA_Pin, SET);
+	HAL_GPIO_WritePin(FPGA_Reset_GPIO_Port, Clock_FPGA_Pin, SET);
+	HAL_GPIO_WritePin(FPGA_Reset_GPIO_Port, Clock_FPGA_Pin, RESET);
 }
 
 //Function : Clock_change
 // Developer: Sander van Beek
 // Input: int* clock_speed (in Hz)
 // Output: status
-// This function changed the speed of tim3 from the base 60Hz value to either 70Hz or 80Hz
+// This function changed the speed of tim3 from the base 120Hz value to either 140Hz or 160Hz
 bool Clock_change(int* clock_speed)
 {
 	// Variable for status check
@@ -52,12 +61,11 @@ bool Clock_change(int* clock_speed)
 	{
 	case 140:
 		// Change timer prescaler for 140Hz frequency
-		htim3.Init.Prescaler = 299;
+		htim3.Init.Prescaler = 600-1;
 		break;
 	case 160:
-		// Change timer prescaler & period for 160Hz frequency
-		htim3.Init.Period = 1049;
-		htim3.Init.Prescaler = 249;
+		// Change timer prescaler for 160Hz frequency
+		htim3.Init.Prescaler = 525-1;
 		break;
 	}
 
