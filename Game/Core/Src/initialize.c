@@ -30,17 +30,14 @@ void initStructures()
 // This function will be run once and runs all the other initalization functions
 void init()
 {
-	// Initialize timer
-	HAL_TIM_Base_Start_IT(&htim3);
+	// Create blackman window
+	init_blackman();
 
 	// Initialize structure
 	initStructures();
 
-	// Sent reset signal to FPGA so make sure all start positions are set
-	// SET is done two times to make the signal lenght around 12ns
-	HAL_GPIO_WritePin(FPGA_Reset_GPIO_Port, Clock_FPGA_Pin, SET);
-	HAL_GPIO_WritePin(FPGA_Reset_GPIO_Port, Clock_FPGA_Pin, SET);
-	HAL_GPIO_WritePin(FPGA_Reset_GPIO_Port, Clock_FPGA_Pin, RESET);
+	// Initialize timer for DFT
+	HAL_TIM_Base_Start_IT(&htim2);
 }
 
 //Function : Clock_change
