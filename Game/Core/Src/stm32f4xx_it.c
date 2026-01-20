@@ -207,7 +207,6 @@ void SysTick_Handler(void)
 void TIM2_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM2_IRQn 0 */
-	dft_inter();
 
   /* USER CODE END TIM2_IRQn 0 */
   HAL_TIM_IRQHandler(&htim2);
@@ -222,18 +221,6 @@ void TIM2_IRQHandler(void)
 void TIM3_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM3_IRQn 0 */
-	// sent clock signal to fpga we do set two times to make the pulse lengt about 12ns
-		HAL_GPIO_WritePin(Clock_FPGA_GPIO_Port, Clock_FPGA_Pin, SET);
-		HAL_GPIO_WritePin(Clock_FPGA_GPIO_Port, Clock_FPGA_Pin, SET);
-		HAL_GPIO_WritePin(Clock_FPGA_GPIO_Port, Clock_FPGA_Pin, RESET);
-
-		// for each active enemy up the yPosition by one every clock pulse
-		for (int i = 0; i < MAX_ENEMYS; i++)
-		{
-			if (Enemy[i].isActive)
-				Enemy[i].yPosition++;
-		}
-
 
   /* USER CODE END TIM3_IRQn 0 */
   HAL_TIM_IRQHandler(&htim3);

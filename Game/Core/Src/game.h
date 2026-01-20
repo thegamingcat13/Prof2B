@@ -16,7 +16,7 @@
 #define POINTS_DEATH 3
 #define POINTS_LIVE 4
 
-#define N 400.0f // Aantal bins
+#define N 300.0f // Aantal bins
 #define FS 20000.0f // Sample rate
 
 extern UART_HandleTypeDef huart3;
@@ -56,12 +56,10 @@ extern uint8_t current_NewEnemyMask;
 
 extern uint16_t score;
 
-extern bool clock_high;
-
-extern volatile bool dft_ready;
-extern volatile bool left;
-extern volatile bool right;
-extern volatile bool start;
+extern volatile int dft_ready;
+extern volatile int left;
+extern volatile int right;
+extern volatile int start;
 
 extern void init(void);
 extern void gameState(int);

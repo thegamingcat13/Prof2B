@@ -25,11 +25,11 @@ bool coll_detect = false;
 // This function runs one gameTick, and makes sure that everything that needs to run for a tick runs.
 void gameTick ()
 {
-	if (dft_ready == true)
+	if (dft_ready == 1)
 	{
 		DFT();
 
-		if (left == true)
+		if (left == 1)
 		{
 			switch (Player.lane)
 			{
@@ -38,9 +38,11 @@ void gameTick ()
 			case 2: Player.lane = 1; break;
 			case 3: Player.lane = 2; break;
 			}
+
+			left = 0;
 		}
 
-		if (right == true)
+		if (right == 1)
 		{
 			switch (Player.lane)
 			{
@@ -49,16 +51,20 @@ void gameTick ()
 			case 2: Player.lane = 3; break;
 			case 3: break;
 			}
+
+			right = 0;
 		}
 
-		if (start == true)
+		if (start == 1)
 		{
 			gameState(RUN);
 			HAL_TIM_Base_Start_IT(&htim3);
 		}
+
+		dft_ready = 0;
 	}
 
-	if (start == true)
+	if (start == 1)
 	{
 
 		// Make sure we didn't already die
