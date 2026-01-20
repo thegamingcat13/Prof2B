@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <stdint.h> // For uint8_t
 #include "usb_host.h"
+#include "math.h"
 
 #define MAX_ENEMYS 4
 #define OBSTACLE_SPAWN_Y 38
@@ -15,9 +16,14 @@
 #define POINTS_DEATH 3
 #define POINTS_LIVE 4
 
+#define N 300.0f // Aantal bins
+#define FS 20000.0f // Sample rate
+
 extern UART_HandleTypeDef huart3;
+extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim3;
 extern RNG_HandleTypeDef hrng;
+extern ADC_HandleTypeDef hadc2;
 
 typedef struct {
     int lane;
@@ -50,7 +56,10 @@ extern uint8_t current_NewEnemyMask;
 
 extern uint16_t score;
 
-extern bool clock_high;
+extern volatile int dft_ready;
+extern volatile int left;
+extern volatile int right;
+extern volatile int start;
 
 extern void init(void);
 extern void gameState(int);
@@ -62,3 +71,6 @@ extern void TransmitByte(uint8_t, uint8_t);
 extern void gameTick(void);
 extern bool Collision(void);
 extern bool Clock_change(int*);
+extern void dft_inter(void);
+extern void DFT(void);
+extern void init_blackman(void);
