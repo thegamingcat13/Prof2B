@@ -23,18 +23,21 @@ void dft_inter(void)
 {
 	if (dft_ready == 0)
 	{
-		// start de ADC om een signaal op te vangen en zodra die oke geeft
+		// start de ADC om een signaal op te vangen
 		HAL_ADC_Start(&hadc2);
 		if (HAL_ADC_PollForConversion(&hadc2, 1) == HAL_OK)
 		{
+			// zodra de ADC oke geeft zet de waardens in de array.
 			INPUT_raw[sample_count] = (float)HAL_ADC_GetValue(&hadc2);
 
 			sample_count++;
 		}
 
+		// stuurd een signaal als de sample cout gelijk/groter is dan de
 		if (sample_count >= (int)N)
 		{
 			dft_ready = 1;
+			HAL_TIM_Base_Stop_IT(&htim2);
 			sample_count = 0;
 		}
 	}

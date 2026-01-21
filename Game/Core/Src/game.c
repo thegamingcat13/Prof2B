@@ -25,6 +25,9 @@ bool coll_detect = false;
 // This function runs one gameTick, and makes sure that everything that needs to run for a tick runs.
 void gameTick ()
 {
+	if (dft_ready != 1)
+		HAL_TIM_Base_Start_IT(&htim2);
+
 	if (dft_ready == 1)
 	{
 		DFT();
