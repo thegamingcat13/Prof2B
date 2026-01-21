@@ -56,7 +56,9 @@ void CreateBytes (uint8_t* byte1, uint8_t* byte2, bool* collision)
 // This function sends the bytes from the CreateBytes() function to the FPGA over UART
 void TransmitByte(uint8_t byte1, uint8_t byte2)
 {
+	while (huart3.gState != HAL_UART_STATE_READY);
+
 	transmit_bytes[0] = byte1;
 	transmit_bytes[1] = byte2;
-	HAL_UART_Transmit_DMA(&huart3, transmit_bytes, 2);
+	HAL_UART_Transmit_DMA(&huart3, (uint8_t *)transmit_bytes, 2);
 }

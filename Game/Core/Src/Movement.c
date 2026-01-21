@@ -2,9 +2,9 @@
 
 // Function PlayerMovement
 // Developer: Collin Crooy
-// Input: De microfoon die op de ADC staat
-// Output: Een signaal dat DFT_ready is waardoor de DFT kan gaan berekenen
-// Dit is de functie die aangeroepen word door de interupt die dan input in een buffer zet.
+// Input: De Direction (links, rechts)
+// Output: NONE
+// Dit is een functie die kijkt of we player naar links moet gaan of naar rechts in elke mogelijke positie.
 void PlayerMovement (int direction)
 {
 	if (direction == LEFT)
