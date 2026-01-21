@@ -2,6 +2,13 @@
 #include "stm32f4xx_it.h"
 #include "game.h"
 
+
+// Function gameTick
+// Developer: Sander van Beek
+// Input: None
+// Output: None
+// This function runs one gameTick, and makes sure that everything that needs to run for a tick runs.
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     if (htim->Instance == TIM2)

@@ -19,7 +19,7 @@ void initStructures()
 	}
 
 	// Initialize player structure
-	Player.lane = -1;
+	Player.lane = 0;
 	Player.isActive = false;
 }
 

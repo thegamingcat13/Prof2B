@@ -14,10 +14,16 @@ float blackman[(int)N];
 float dft_array[(int)N];
 
 
+// Function dft_inter
+// Developer: Collin Crooy
+// Input: De microfoon die op de ADC staat
+// Output: Een signaal dat DFT_ready is waardoor de DFT kan gaan berekenen
+// Dit is de functie die aangeroepen word door de interupt die dan input in een buffer zet.
 void dft_inter(void)
 {
 	if (dft_ready == 0)
 	{
+		// start de ADC om een signaal op te vangen en zodra die oke geeft
 		HAL_ADC_Start(&hadc2);
 		if (HAL_ADC_PollForConversion(&hadc2, 1) == HAL_OK)
 		{
@@ -34,7 +40,12 @@ void dft_inter(void)
 	}
 }
 
-
+// Function DFT
+// Developer: Collin Crooy
+// Input: NONE
+// Output: een signaal of de player naar links, rechts en of de game start.
+// Dit is de functie die al de berekeningen doet om te weten welke frequentie er is
+// en stuurd een signaal welke output die dan moet geven
 void DFT(void)
 {
     // eerst window toepassen op kopie
