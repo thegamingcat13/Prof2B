@@ -26,7 +26,10 @@ bool coll_detect = false;
 void gameTick ()
 {
 	if (dft_ready != 1)
+	{
+		HAL_TIM_Base_Init(&htim2);
 		HAL_TIM_Base_Start_IT(&htim2);
+	}
 
 	if (dft_ready == 1)
 	{

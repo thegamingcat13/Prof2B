@@ -33,7 +33,7 @@ void dft_inter(void)
 			sample_count++;
 		}
 
-		// stuurd een signaal als de sample cout gelijk/groter is dan de
+		// stuurd een signaal als de sample count gelijk/groter is dan de bin(N)
 		if (sample_count >= (int)N)
 		{
 			dft_ready = 1;
