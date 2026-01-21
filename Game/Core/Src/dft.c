@@ -37,7 +37,6 @@ void dft_inter(void)
 		if (sample_count >= (int)N)
 		{
 			dft_ready = 1;
-			HAL_TIM_Base_Stop_IT(&htim2);
 			sample_count = 0;
 		}
 	}
@@ -51,12 +50,13 @@ void dft_inter(void)
 // en stuurd een signaal welke output die dan moet geven
 void DFT(void)
 {
-    // eerst window toepassen op kopie
+    // eerst window toepassen op ADC input
     for (int n = 0; n < (int)N; n++)
     {
         INPUT_win[n] = INPUT_raw[n] * blackman[n];
     }
 
+    // hele berekingen van RE en IM voor de DFT
     for (int k = 30; k < 41; k++)
     {
         float re = 0.0f;
@@ -68,6 +68,7 @@ void DFT(void)
         }
         float mag = sqrtf(re * re + im * im);
         dft_array[k] = mag;
+        // in deze case checken we of onze frequentie word geraakt en dan word de bij passelijke signaal true.
         switch (k)
         {
         case 30:
@@ -127,7 +128,11 @@ void DFT(void)
     }
 }
 
-
+// Function init_blackman
+// Developer: Collin Crooy
+// Input: NONE
+// Output: NONE
+// Dit is een funcite die de blackman window 1 keer inialiseerd om dan te gebruiken in de DFT
 void init_blackman(void)
 {
     for (int n = 0; n < (int)N; n++)

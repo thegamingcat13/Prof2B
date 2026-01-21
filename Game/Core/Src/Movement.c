@@ -1,5 +1,10 @@
 #include "game.h"
 
+// Function PlayerMovement
+// Developer: Collin Crooy
+// Input: De microfoon die op de ADC staat
+// Output: Een signaal dat DFT_ready is waardoor de DFT kan gaan berekenen
+// Dit is de functie die aangeroepen word door de interupt die dan input in een buffer zet.
 void PlayerMovement (int direction)
 {
 	if (direction == LEFT)

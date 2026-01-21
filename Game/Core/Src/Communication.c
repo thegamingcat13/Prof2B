@@ -1,5 +1,7 @@
 #include "game.h"
 
+volatile uint8_t transmit_bytes[2];
+
 // Function: CreateBytes
 // Developer: Sander van Beek
 // Input uint8_t (pointer) Byte1 & (pointer) Byte2 & bool collision
@@ -54,9 +56,7 @@ void CreateBytes (uint8_t* byte1, uint8_t* byte2, bool* collision)
 // This function sends the bytes from the CreateBytes() function to the FPGA over UART
 void TransmitByte(uint8_t byte1, uint8_t byte2)
 {
-	uint8_t transmit_bytes[2];
-
 	transmit_bytes[0] = byte1;
 	transmit_bytes[1] = byte2;
-	HAL_UART_Transmit(&huart3, transmit_bytes, 2, HAL_MAX_DELAY);
+	HAL_UART_Transmit_DMA(&huart3, transmit_bytes, 2);
 }

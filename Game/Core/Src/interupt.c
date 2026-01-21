@@ -3,12 +3,11 @@
 #include "game.h"
 
 
-// Function gameTick
-// Developer: Sander van Beek
+// Function HAL_TIM_PeriodElapsedCallback
+// Developer: Sander van Beek, Collin Crooy
 // Input: None
 // Output: None
-// This function runs one gameTick, and makes sure that everything that needs to run for a tick runs.
-
+// Dit is een functie die checkt welke timer bezig is en dan de bij passelijke dingen moet uitvoeren
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     if (htim->Instance == TIM2)
