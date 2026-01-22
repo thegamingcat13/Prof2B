@@ -4,8 +4,9 @@
 #include "math.h"
 
 #define MAX_ENEMYS 4
-#define OBSTACLE_SPAWN_Y 38
+#define OBSTACLE_SPAWN_Y 320
 #define PLAYER_Y_POS 370
+#define ENEMY_END 400
 #define TICK_SPEED 100
 
 #define RIGHT 1
@@ -16,12 +17,14 @@
 #define POINTS_DEATH 3
 #define POINTS_LIVE 4
 
-#define N 300.0f // Aantal bins
-#define FS 20000.0f // Sample rate
+#define INTERVAL 1000
+
+#define N 70.0f // Aantal bins
+#define FS 7000.0f // Sample rate
 
 extern UART_HandleTypeDef huart3;
 extern TIM_HandleTypeDef htim2;
-extern TIM_HandleTypeDef htim3;
+extern TIM_HandleTypeDef htim5;
 extern RNG_HandleTypeDef hrng;
 extern ADC_HandleTypeDef hadc2;
 
@@ -57,9 +60,14 @@ extern uint8_t current_NewEnemyMask;
 extern uint16_t score;
 
 extern volatile int dft_ready;
-extern volatile int left;
-extern volatile int right;
+extern int left;
+extern int right;
 extern volatile int start;
+
+extern volatile int Do_Game_Tick;
+extern volatile int cycle_count_enemy;
+extern int volatile cycleCountPlayer;
+extern volatile int cycle_start_stop;
 
 extern void init(void);
 extern void gameState(int);
@@ -74,3 +82,4 @@ extern bool Clock_change(int*);
 extern void dft_inter(void);
 extern void DFT(void);
 extern void init_blackman(void);
+extern int PlayerMovement(int*, int*);

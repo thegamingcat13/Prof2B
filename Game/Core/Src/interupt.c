@@ -2,6 +2,12 @@
 #include "stm32f4xx_it.h"
 #include "game.h"
 
+int cycleCount = 0;
+int volatile cycleCountPlayer = 0;
+volatile int cycle_count_enemy = 0;
+volatile int cycle_start_stop = 0;
+volatile int Do_Game_Tick = 0;
+
 
 // Function HAL_TIM_PeriodElapsedCallback
 // Developer: Sander van Beek, Collin Crooy
@@ -15,15 +21,24 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         dft_inter();
     }
 
-    if (htim->Instance == TIM3)
+    if (htim->Instance == TIM5)
     {
-        // Game logica en FPGA clock
-        HAL_GPIO_WritePin(Clock_FPGA_GPIO_Port, Clock_FPGA_Pin, SET);
-        HAL_GPIO_WritePin(Clock_FPGA_GPIO_Port, Clock_FPGA_Pin, SET);
-        HAL_GPIO_WritePin(Clock_FPGA_GPIO_Port, Clock_FPGA_Pin, RESET);
+        cycleCount++;
+        cycle_count_enemy++;
+        cycle_start_stop++;
+        cycleCountPlayer++;
 
-        for (int i = 0; i < MAX_ENEMYS; i++) {
-            if (Enemy[i].isActive) Enemy[i].yPosition++;
+        if (cycleCount >= 12) // 12 * 8.33ms = ~100ms
+        {
+            cycleCount = 0;
+            // Zet hier een vlaggetje (flag) dat 100ms voorbij is
+            Do_Game_Tick = 1;
         }
+
+        for (int i = 0; i < MAX_ENEMYS; i++)
+        {
+			if (Enemy[i].isActive)
+				Enemy[i].yPosition++;
+		}
     }
 }

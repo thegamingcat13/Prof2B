@@ -5,27 +5,32 @@
 // Input: De Direction (links, rechts)
 // Output: NONE
 // Dit is een functie die kijkt of we player naar links moet gaan of naar rechts in elke mogelijke positie.
-void PlayerMovement (int direction)
+int PlayerMovement (int *left, int *right)
 {
-	if (direction == LEFT)
+	if (*right == 1)
 	{
+		*right = 0;
 		switch (Player.lane)
 		{
-		case 1: Player.lane = 0; break;
-		case 2: Player.lane = 1; break;
-		case 3: Player.lane = 2; break;
-		default: break;
+		case 0: Player.lane = 1; return 1;
+		case 1: Player.lane = 2; return 1;
+		case 2: Player.lane = 3; return 1;
+		default: return 1;
 		}
 	}
 
-	if (direction == RIGHT)
+	if (*left == 1)
 	{
+		*left = 0;
+
 		switch (Player.lane)
 		{
-		case 0: Player.lane = 1; break;
-		case 1: Player.lane = 2; break;
-		case 2: Player.lane = 3; break;
-		default: break;
+		case 1: Player.lane = 0; return 1;
+		case 2: Player.lane = 1; return 1;
+		case 3: Player.lane = 2; return 1;
+		default: return 1;
 		}
 	}
+
+	return 0;
 }

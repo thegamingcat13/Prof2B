@@ -10,6 +10,7 @@
 // The location of the new cars is randomized using the hardware rng generator on the stm32
 uint8_t EnemyCarGenerator()
 {
+
 	uint32_t mask; // internal variable for the car mask
 
 	if (HAL_RNG_GenerateRandomNumber(&hrng, &mask) == HAL_OK)
@@ -28,6 +29,12 @@ uint8_t EnemyCarGenerator()
 // The function returns whether or not the creation of the enemy succeeded
 bool addNewEnemy(int lane)
 {
+	for (int i = 0; i < MAX_ENEMYS; i++)
+	{
+		if (Enemy[i].yPosition >= ENEMY_END)
+			Enemy[i].isActive = false;
+	}
+
     // Check if there already is a car in the requested lane
     for (int i = 0; i < MAX_ENEMYS; i++) {
         if (Enemy[i].isActive && Enemy[i].lane == lane) {

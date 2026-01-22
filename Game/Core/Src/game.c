@@ -29,50 +29,31 @@ void gameTick ()
 	{
 		DFT();
 
-		if (left == 1)
+//		PlayerMovement(&left, &right);
+
+		if (cycleCountPlayer >= 30)
 		{
-			switch (Player.lane)
-			{
-			case 0: break;
-			case 1: Player.lane = 0; break;
-			case 2: Player.lane = 1; break;
-			case 3: Player.lane = 2; break;
-			}
-
-			left = 0;
-		}
-
-		if (right == 1)
-		{
-			switch (Player.lane)
-			{
-			case 0: Player.lane = 1; break;
-			case 1: Player.lane = 2; break;
-			case 2: Player.lane = 3; break;
-			case 3: break;
-			}
-
-			right = 0;
+			if (PlayerMovement(&left, &right) == 1)
+				cycleCountPlayer = 0;
 		}
 
 		if (start == 1)
 		{
 			gameState(RUN);
-			HAL_TIM_Base_Start_IT(&htim3);
 		}
 
 		dft_ready = 0;
 	}
 
+	// Make sure we didn't already die
+	if (!(currentGameState == SCORE_DEATH))
+	{
+		// Check for collision
+//			coll_detect = Collision();
+	}
+
 	if (start == 1)
 	{
-
-		// Make sure we didn't already die
-		if (!(currentGameState == SCORE_DEATH))
-		{
-			// Check for collision
-			coll_detect = Collision();
-		}
 
 		// Make choice based on collision
 		switch (coll_detect)
@@ -122,10 +103,15 @@ void gameTick ()
 				}
 			}
 
-			// Generate new enemies
-			current_NewEnemyMask = EnemyCarGenerator();
-			processNewEnemyMask(&current_NewEnemyMask);
-			NewEnemyMask = current_NewEnemyMask;
+			if (cycle_count_enemy >= 120)
+			{
+				cycle_count_enemy = 0;
+
+				// Generate new enemies
+				current_NewEnemyMask = EnemyCarGenerator();
+				processNewEnemyMask(&current_NewEnemyMask);
+				NewEnemyMask = current_NewEnemyMask;
+			}
 
 			// Create the 2 bytes necessary for FPGA communication
 			CreateBytes (&tx_byte1, &tx_byte2, &coll_detect);

@@ -2,8 +2,8 @@
 #include "main.h"
 
 volatile int dft_ready = 0;
-volatile int left = 0;
-volatile int right = 0;
+int left = 0;
+int right = 0;
 volatile int start = 0;
 
 volatile int sample_count = 0;
@@ -56,76 +56,90 @@ void DFT(void)
         INPUT_win[n] = INPUT_raw[n] * blackman[n];
     }
 
-    // hele berekingen van RE en IM voor de DFT
-    for (int k = 30; k < 41; k++)
-    {
-        float re = 0.0f;
-        float im = 0.0f;
-        for (int n = 0; n < (int)N; n++) {
-            float angle = 2.0f * M_PI * k * n / N;
-            re += INPUT_win[n] * cosf(angle);
-            im += INPUT_win[n] * sinf(angle);
-        }
-        float mag = sqrtf(re * re + im * im);
-        dft_array[k] = mag;
-        // in deze case checken we of onze frequentie word geraakt en dan word de bij passelijke signaal true.
-        switch (k)
-        {
-        case 30:
-        		if (mag > 30000)
-        		{
-        			left = true;
-        			HAL_GPIO_TogglePin(GPIOD, LD4_Pin);
-        			continue;
-        		}
-        		break;
+//    for (int k = 0; k < N; k++)
+//    {
+//		float re = 0.0f;
+//		float im = 0.0f;
+//		for (int n = 0; n < (int)N; n++) {
+//			float angle = 2.0f * M_PI * k * n / N;
+//			re += INPUT_win[n] * cosf(angle);
+//			im += INPUT_win[n] * sinf(angle);
+//		}
+//		float mag = sqrtf(re * re + im * im);
+//		dft_array[k] = mag;
+//	}
 
-        case 31:
-        		if (mag > 30000)
-        		{
-        			left = true;
-        			HAL_GPIO_TogglePin(GPIOD, LD4_Pin);
-        			continue;
-        		}
-        		break;
+    int k = 21;
+	float re = 0.0f;
+	float im = 0.0f;
+	for (int n = 0; n < (int)N; n++)
+	{
+		float angle = 2.0f * M_PI * k * n / N;
+		re += INPUT_win[n] * cosf(angle);
+		im += INPUT_win[n] * sinf(angle);
+	}
+	float mag = sqrtf(re * re + im * im);
 
-        case 35:
-        		if (mag > 30000)
-				{
-					right = true;
-					HAL_GPIO_TogglePin(GPIOD, LD5_Pin);
-					continue;
-				}
-        		break;
+	if (mag >= 13000)
+	{
+		left = 1;
+		HAL_GPIO_TogglePin(GPIOD, LD4_Pin);
+//		for (int n = 0; n < (int)N; n++)
+//		{
+//			INPUT_raw[n] = 0;
+//			INPUT_win[n] = 0;
+//			mag = 0;
+//		}
+		return;
+    } // bin 45 bin 50 57
 
-        case 36:
-        		if (mag > 30000)
-        		{
-        			right = true;
-        			HAL_GPIO_TogglePin(GPIOD, LD5_Pin);
-        			continue;
-        		}
-        		break;
+	k = 24;
+	re = 0.0f;
+	im = 0.0f;
+	for (int n = 0; n < (int)N; n++)
+	{
+		float angle = 2.0f * M_PI * k * n / N;
+		re += INPUT_win[n] * cosf(angle);
+		im += INPUT_win[n] * sinf(angle);
+	}
+	mag = sqrtf(re * re + im * im);
 
-        case 39:
-        		if (mag > 30000)
-        		{
-        			start = true;
-        			HAL_GPIO_TogglePin(GPIOD, LD6_Pin);
-        			continue;
-        		}
-        		break;
+	if (mag >= 9000)
+	{
+		right = 1;
+		HAL_GPIO_TogglePin(GPIOD, LD5_Pin);
+//		for (int n = 0; n < (int)N; n++)
+//		{
+//			INPUT_raw[n] = 0;
+//			INPUT_win[n] = 0;
+//			mag = 0;
+//		}
+		return;
+	}
 
-        case 40:
-        		if (mag > 30000)
-        		{
-        			start = true;
-        			HAL_GPIO_TogglePin(GPIOD, LD6_Pin);
-        			continue;
-        		}
-        		break;
-        }
-    }
+	k = 26;
+	re = 0.0f;
+	im = 0.0f;
+	for (int n = 0; n < (int)N; n++)
+	{
+		float angle = 2.0f * M_PI * k * n / N;
+		re += INPUT_win[n] * cosf(angle);
+		im += INPUT_win[n] * sinf(angle);
+	}
+	mag = sqrtf(re * re + im * im);
+
+	if (mag >= 5000)
+	{
+		start = 1;
+		HAL_GPIO_TogglePin(GPIOD, LD6_Pin);
+//		for (int n = 0; n < (int)N; n++)
+//		{
+//			INPUT_raw[n] = 0;
+//			INPUT_win[n] = 0;
+//			mag = 0;
+//		}
+		return;
+	}
 }
 
 // Function init_blackman

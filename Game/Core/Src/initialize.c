@@ -14,13 +14,12 @@ void initStructures()
 	{
 		// Initialize enemy structure
 		Enemy[i].lane = -1;
-		Enemy[i].yPosition = -1;
+		Enemy[i].yPosition = 0;
 		Enemy[i].isActive = false;
 	}
 
 	// Initialize player structure
 	Player.lane = 0;
-	Player.isActive = false;
 }
 
 // Function: init
@@ -36,6 +35,10 @@ void init()
 	// Initialize structure
 	initStructures();
 
+	// Start tim 5
+	HAL_TIM_PWM_Start(&htim5, TIM_CHANNEL_2);
+	HAL_TIM_Base_Start_IT(&htim5);
+
 	// Initialize timer for DFT
 	HAL_TIM_Base_Start_IT(&htim2);
 }
@@ -47,39 +50,52 @@ void init()
 // This function changed the speed of tim3 from the base 120Hz value to either 140Hz or 160Hz
 bool Clock_change(int* clock_speed)
 {
-	// Variable for status check
-	HAL_StatusTypeDef status;
-
-	// Stop timer
-	HAL_TIM_Base_Stop_IT(&htim3);
+	// Variable to hold the new counter value
+	uint32_t new_arr = 0;
 
 	// Check requestion frequency
 	switch (*clock_speed)
-	{
-	case 140:
-		// Change timer prescaler for 140Hz frequency
-		htim3.Init.Prescaler = 600-1;
-		break;
-	case 160:
-		// Change timer prescaler for 160Hz frequency
-		htim3.Init.Prescaler = 525-1;
-		break;
-	}
-
-	// Initialize timer
-	status = HAL_TIM_Base_Init(&htim3);
-
-	// Check status of initialization
-	if (status != HAL_OK)
-		return false;
+	    {
+	        case 120:
+	            new_arr = 699999;
+	            break;
+	        case 140:
+	            new_arr = 599999;
+	            break;
+	        case 160:
+	            new_arr = 524999;
+	            break;
+	        default:
+	            return false; // Ongeldige snelheid
+	    }
 
 	// Start timer in interupt mode
-	status = HAL_TIM_Base_Start_IT(&htim3);
+	__HAL_TIM_SET_AUTORELOAD(&htim5, new_arr);
 
-	// Check status of started timer
-	if (status != HAL_OK)
-		return false;
+	// Haal de huidige ARR waarde op uit de hardware
+	uint32_t current_arr = __HAL_TIM_GET_AUTORELOAD(&htim5);
 
-	return true;
+	switch (*clock_speed)
+	{
+	case 120:
+		if (current_arr == 699999)
+			return true;
+		else
+			return false;
+
+	case 140:
+		if (current_arr == 599999)
+			return true;
+		else
+			return false;
+
+	case 160:
+		if (current_arr == 524999)
+			return true;
+		else
+			return false;
+	}
+
+	return false;
 
 }
