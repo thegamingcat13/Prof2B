@@ -38,7 +38,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         for (int i = 0; i < MAX_ENEMYS; i++)
         {
 			if (Enemy[i].isActive)
+			{
 				Enemy[i].yPosition++;
+
+				if (Enemy[i].yPosition + ENEMY_HEIGHT >= ENEMY_OFF_SCREEN)
+					Enemy[i].isActive = false;
+			}
 		}
     }
 }

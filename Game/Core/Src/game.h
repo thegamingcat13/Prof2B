@@ -4,9 +4,12 @@
 #include "math.h"
 
 #define MAX_ENEMYS 4
-#define OBSTACLE_SPAWN_Y 320
-#define PLAYER_Y_POS 370
-#define ENEMY_END 400
+#define OBSTACLE_SPAWN_Y -100
+#define ENEMY_HEIGHT 140
+#define FPGA_SCREEN_BOTTOM 619
+#define PLAYER_TOP 370
+#define PLAYER_BOTTOM 470
+#define ENEMY_OFF_SCREEN 619
 #define TICK_SPEED 100
 
 #define RIGHT 1

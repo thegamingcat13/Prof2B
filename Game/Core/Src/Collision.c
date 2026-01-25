@@ -8,20 +8,18 @@
 // The collision check changed a boolean which value is returned at the end of the function.
 bool Collision()
 {
-	bool collided = false;
 	// Loop through all enemy's
 	for (int i = 0; i < MAX_ENEMYS; i++)
 	{
 		// Check if enemy lane is the same as the players
-		if (Player.lane == Enemy[i].lane)
+		if (Enemy[i].isActive && Player.lane == Enemy[i].lane)
 		{
-			// Check for collision based on y coordinates of enemy
-			if (PLAYER_Y_POS - Enemy[i].yPosition <= 0)
-			{
-				collided = true;
-				break;
-			}
+			int enemy_front = Enemy[i].yPosition + ENEMY_HEIGHT;
+			int enemy_back	= Enemy[i].yPosition;
+
+			if (enemy_front >= PLAYER_TOP && enemy_back <= PLAYER_BOTTOM)
+				return true;
 		}
 	}
-	return collided;
+	return false;
 }

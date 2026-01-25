@@ -29,12 +29,6 @@ uint8_t EnemyCarGenerator()
 // The function returns whether or not the creation of the enemy succeeded
 bool addNewEnemy(int lane)
 {
-	for (int i = 0; i < MAX_ENEMYS; i++)
-	{
-		if (Enemy[i].yPosition >= ENEMY_END)
-			Enemy[i].isActive = false;
-	}
-
     // Check if there already is a car in the requested lane
     for (int i = 0; i < MAX_ENEMYS; i++) {
         if (Enemy[i].isActive && Enemy[i].lane == lane) {
@@ -49,7 +43,6 @@ bool addNewEnemy(int lane)
             Enemy[i].yPosition = OBSTACLE_SPAWN_Y;
             Enemy[i].isActive = true;
 
-            printf("Spawned new car in lane %d\n", lane);
             return true; // Success
         }
     }
