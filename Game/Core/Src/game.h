@@ -72,6 +72,8 @@ extern volatile int cycle_count_enemy;
 extern int volatile cycleCountPlayer;
 extern volatile int cycle_start_stop;
 
+extern volatile bool collisionEnabled;
+
 extern void init(void);
 extern void gameState(int);
 extern uint8_t EnemyCarGenerator(void);

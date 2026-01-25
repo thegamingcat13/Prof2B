@@ -16,6 +16,8 @@ uint16_t score = 0;
 int Speed_140 = 140;
 int Speed_160 = 160;
 
+volatile bool collisionEnabled = false;
+
 bool coll_detect = false;
 
 // Function gameTick
@@ -49,7 +51,7 @@ void gameTick ()
 	if (!(currentGameState == SCORE_DEATH))
 	{
 		// Check for collision
-//			coll_detect = Collision();
+		coll_detect = (collisionEnabled) ? Collision() : false;
 	}
 
 	if (start == 1)
