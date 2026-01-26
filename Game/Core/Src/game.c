@@ -9,8 +9,6 @@ uint8_t NewEnemyMask = 0x00;
 uint8_t tx_byte1;
 uint8_t tx_byte2;
 
-uint8_t current_NewEnemyMask = 0x00;
-
 uint16_t score = 0;
 
 int Speed_140 = 140;
@@ -113,9 +111,8 @@ void gameTick ()
 				cycle_count_enemy = 0;
 
 				// Generate new enemies
-				current_NewEnemyMask = EnemyCarGenerator();
-				processNewEnemyMask(&current_NewEnemyMask);
-				NewEnemyMask = current_NewEnemyMask;
+				NewEnemyMask = EnemyCarGenerator();
+				processNewEnemyMask(&NewEnemyMask);
 			}
 
 			// Create the 2 bytes necessary for FPGA communication
