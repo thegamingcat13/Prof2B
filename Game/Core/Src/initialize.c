@@ -14,7 +14,7 @@ void initStructures()
 	{
 		// Initialize enemy structure
 		Enemy[i].lane = -1;
-		Enemy[i].yPosition = 0;
+		Enemy[i].yPosition = -1;
 		Enemy[i].isActive = false;
 	}
 
@@ -47,13 +47,13 @@ void init()
 // Developer: Sander van Beek
 // Input: int* clock_speed (in Hz)
 // Output: status
-// This function changed the speed of tim3 from the base 120Hz value to either 140Hz or 160Hz
+// This function changed the speed of tim5 from the base 120Hz value to either 140Hz or 160Hz
 bool Clock_change(int* clock_speed)
 {
 	// Variable to hold the new counter value
 	uint32_t new_arr = 0;
 
-	// Check requestion frequency
+	// Check requested frequency
 	switch (*clock_speed)
 	    {
 	        case 120:
@@ -69,12 +69,14 @@ bool Clock_change(int* clock_speed)
 	            return false; // Ongeldige snelheid
 	    }
 
-	// Start timer in interupt mode
+	// Write new counter value to timer
 	__HAL_TIM_SET_AUTORELOAD(&htim5, new_arr);
 
-	// Haal de huidige ARR waarde op uit de hardware
+	// Get the current counter value from the register
 	uint32_t current_arr = __HAL_TIM_GET_AUTORELOAD(&htim5);
 
+
+	// Check counter value based on requested clock speed
 	switch (*clock_speed)
 	{
 	case 120:

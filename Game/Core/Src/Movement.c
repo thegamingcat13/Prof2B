@@ -7,6 +7,7 @@
 // Dit is een functie die kijkt of we player naar links moet gaan of naar rechts in elke mogelijke positie.
 int PlayerMovement (int *left, int *right)
 {
+	// Beweeg naar rechts
 	if (*right == 1)
 	{
 		*right = 0;
@@ -19,6 +20,7 @@ int PlayerMovement (int *left, int *right)
 		}
 	}
 
+	// Beweeg naar links
 	if (*left == 1)
 	{
 		*left = 0;

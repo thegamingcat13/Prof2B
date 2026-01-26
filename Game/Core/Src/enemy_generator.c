@@ -20,7 +20,7 @@ uint8_t EnemyCarGenerator()
 	return (uint8_t)(HAL_GetTick() % 15);
 }
 
-// Function: addNewObstacleCar
+// Function: addNewEnemy
 // Developer: Sander van Beek
 // Input: int lane
 // Output: Bool
@@ -54,7 +54,7 @@ bool addNewEnemy(int lane)
 // Input: uint8_t mask
 // Output: None
 // This function translates the NewEnemyMask into a interger value that we can use to fill the structure
-// We also check if we succesfully added the new enemy to the structure if now we modify the mask
+// We also check if we succesfully added the new enemy to the structure if this failed we modify the mask
 // This way we don't sent wrong information to the fpga
 void processNewEnemyMask(uint8_t *mask)
 {

@@ -27,18 +27,21 @@ bool coll_detect = false;
 // This function runs one gameTick, and makes sure that everything that needs to run for a tick runs.
 void gameTick ()
 {
+
+	// If dft buffer is filled calculate the dft
 	if (dft_ready == 1)
 	{
 		DFT();
 
-//		PlayerMovement(&left, &right);
-
+		// Player can move once every 30 clock ticks from TIM5
 		if (cycleCountPlayer >= 30)
 		{
+			// If player moved reset the clock tick counter
 			if (PlayerMovement(&left, &right) == 1)
 				cycleCountPlayer = 0;
 		}
 
+		// Start game is start button is pressed
 		if (start == 1)
 		{
 			gameState(RUN);
@@ -50,7 +53,7 @@ void gameTick ()
 	// Make sure we didn't already die
 	if (!(currentGameState == SCORE_DEATH))
 	{
-		// Check for collision
+		// Check for collision, only if collisionEnabled is true otherwise coll_detect will always be false
 		coll_detect = (collisionEnabled) ? Collision() : false;
 	}
 
@@ -123,6 +126,7 @@ void gameTick ()
 
 			NewEnemyMask = 0x00;
 			break;
+
 			// Collided
 		case true:
 			// Set gameState to score with death
