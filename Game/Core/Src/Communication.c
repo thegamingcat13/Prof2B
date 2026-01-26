@@ -37,8 +37,7 @@ void CreateBytes (uint8_t* byte1, uint8_t* byte2, bool* collision)
 		uint8_t score2 = 0x00;
 
 		// Splitting the score bytes and storing them in individual bytes
-		score1 = (uint8_t)score >> 8;
-		score1 = score1 & 0x0F;
+		score1 = (uint8_t)(score >> 8) & 0x0F;
 		score2 = (uint8_t)score & 0xFF;
 
 		// Creating the bytes for UART transmit
