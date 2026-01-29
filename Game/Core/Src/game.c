@@ -43,6 +43,7 @@ void gameTick ()
 		if (start == 1)
 		{
 			gameState(RUN);
+			start = 0;
 		}
 
 		dft_ready = 0;
@@ -55,7 +56,7 @@ void gameTick ()
 		coll_detect = (collisionEnabled) ? Collision() : false;
 	}
 
-	if (start == 1)
+	if (currentGameState == RUNNING)
 	{
 
 		// Make choice based on collision

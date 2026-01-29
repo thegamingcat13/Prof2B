@@ -80,7 +80,7 @@ void DFT(void)
 	}
 	float mag = sqrtf(re * re + im * im);
 
-	if (mag >= 13000)
+	if (mag >= 10000)
 	{
 		left = 1;
 		HAL_GPIO_TogglePin(GPIOD, LD4_Pin);
@@ -104,7 +104,7 @@ void DFT(void)
 	}
 	mag = sqrtf(re * re + im * im);
 
-	if (mag >= 9000)
+	if (mag >= 7000)
 	{
 		right = 1;
 		HAL_GPIO_TogglePin(GPIOD, LD5_Pin);
